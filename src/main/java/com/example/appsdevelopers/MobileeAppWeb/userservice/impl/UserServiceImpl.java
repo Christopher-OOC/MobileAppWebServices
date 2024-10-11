@@ -4,6 +4,7 @@ import com.example.appsdevelopers.MobileeAppWeb.request.UserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.response.UserRest;
 import com.example.appsdevelopers.MobileeAppWeb.shared.Utils;
 import com.example.appsdevelopers.MobileeAppWeb.userservice.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Autowired
     public UserServiceImpl(Utils utils) {
         this.utils = utils;
     }
@@ -31,7 +33,7 @@ public class UserServiceImpl implements UserService {
         returnValue.setFirstName(userDetails.getFirstName());
         returnValue.setLastName(userDetails.getLastName());
 
-        String userId = UUID.randomUUID().toString();
+        String userId = utils.generateUserId();
         returnValue.setUserId(userId);
 
         users.put(userId, returnValue);
