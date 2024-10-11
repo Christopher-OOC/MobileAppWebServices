@@ -2,6 +2,7 @@ package com.example.appsdevelopers.MobileeAppWeb.userservice.impl;
 
 import com.example.appsdevelopers.MobileeAppWeb.request.UserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.response.UserRest;
+import com.example.appsdevelopers.MobileeAppWeb.shared.Utils;
 import com.example.appsdevelopers.MobileeAppWeb.userservice.UserService;
 import org.springframework.stereotype.Service;
 
