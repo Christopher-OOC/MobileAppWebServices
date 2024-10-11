@@ -7,9 +7,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+    private Map<String, UserRest> users;
 
     @GetMapping
     public String getUsers(
@@ -21,14 +27,13 @@ public class UserController {
     }
 
     @GetMapping(value = "/{userId}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<UserRest> getUser(@PathVariable("userId") String userId) {
+    public ResponseEntity<?> getUser(@PathVariable("userId") String userId) {
 
-        UserRest returnValue = new UserRest();
-        returnValue.setEmail("test@test.com");
-        returnValue.setFirstName("Christopher");
-        returnValue.setLastName("Olojede");
+        if (users.containsKey(userId)) {
+            return ResponseEntity.ok(users.get(userId));
+        }
 
-        return ResponseEntity.ok(returnValue);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping(
@@ -41,6 +46,15 @@ public class UserController {
         returnValue.setEmail(userDetails.getEmail());
         returnValue.setFirstName(userDetails.getFirstName());
         returnValue.setLastName(userDetails.getLastName());
+
+        String userId = UUID.randomUUID().toString();
+        returnValue.setUserId(userId);
+
+        if (users == null) {
+            users = new HashMap<>();
+        }
+
+        users.put(userId, returnValue);
 
         return ResponseEntity.ok(returnValue);
     }
