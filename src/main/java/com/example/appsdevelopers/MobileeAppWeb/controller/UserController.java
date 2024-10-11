@@ -1,6 +1,5 @@
 package com.example.appsdevelopers.MobileeAppWeb.controller;
 
-import com.example.appsdevelopers.MobileeAppWeb.exceptions.UserServiceException;
 import com.example.appsdevelopers.MobileeAppWeb.request.UpdateUserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.request.UserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.response.UserRest;
