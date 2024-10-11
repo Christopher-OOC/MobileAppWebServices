@@ -4,7 +4,9 @@ import com.example.appsdevelopers.MobileeAppWeb.exceptions.UserServiceException;
 import com.example.appsdevelopers.MobileeAppWeb.request.UpdateUserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.request.UserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.response.UserRest;
+import com.example.appsdevelopers.MobileeAppWeb.userservice.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ import java.util.UUID;
 public class UserController {
 
     private Map<String, UserRest> users = new HashMap<>();
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public String getUsers(
@@ -48,15 +53,7 @@ public class UserController {
     )
     public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDetailsRequestModel userDetails) {
 
-        UserRest returnValue = new UserRest();
-        returnValue.setEmail(userDetails.getEmail());
-        returnValue.setFirstName(userDetails.getFirstName());
-        returnValue.setLastName(userDetails.getLastName());
-
-        String userId = UUID.randomUUID().toString();
-        returnValue.setUserId(userId);
-
-        users.put(userId, returnValue);
+        UserRest returnValue = userService.createUser(userDetails);
 
         return ResponseEntity.ok(returnValue);
     }
