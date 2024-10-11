@@ -1,5 +1,6 @@
 package com.example.appsdevelopers.MobileeAppWeb.controller;
 
+import com.example.appsdevelopers.MobileeAppWeb.request.UpdateUserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.request.UserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.response.UserRest;
 import jakarta.validation.Valid;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserController {
 
-    private Map<String, UserRest> users;
+    private Map<String, UserRest> users = new HashMap<>();
 
     @GetMapping
     public String getUsers(
@@ -50,18 +51,32 @@ public class UserController {
         String userId = UUID.randomUUID().toString();
         returnValue.setUserId(userId);
 
-        if (users == null) {
-            users = new HashMap<>();
-        }
-
         users.put(userId, returnValue);
 
         return ResponseEntity.ok(returnValue);
     }
 
-    @PutMapping
-    public String updateUser() {
-        return "update user was called";
+    @PutMapping(path = "/{userId}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+    )
+    public ResponseEntity<?> updateUser(
+        @PathVariable("userId") String userId,
+        @Valid @RequestBody UpdateUserDetailsRequestModel userDetails
+    ) {
+
+        UserRest storedUserDetails = users.get(userId);
+
+        if (storedUserDetails == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        storedUserDetails.setFirstName(userDetails.getFirstName());
+        storedUserDetails.setLastName(userDetails.getLastName());
+
+        users.put(userId, storedUserDetails);
+
+        return ResponseEntity.ok(storedUserDetails);
     }
 
     @DeleteMapping
