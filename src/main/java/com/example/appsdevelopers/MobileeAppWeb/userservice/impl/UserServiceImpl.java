@@ -13,6 +13,15 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private Map<String, UserRest> users = new HashMap<>();
+    Utils utils;
+
+    public UserServiceImpl() {
+
+    }
+
+    public UserServiceImpl(Utils utils) {
+        this.utils = utils;
+    }
 
     @Override
     public UserRest createUser(UserDetailsRequestModel userDetails) {
