@@ -53,6 +53,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
         ErrorMessage error = new ErrorMessage(new Date(), errorMessage);
 
+        // Response
         return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
