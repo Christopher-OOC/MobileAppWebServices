@@ -1,5 +1,6 @@
 package com.example.appsdevelopers.MobileeAppWeb.controller;
 
+import com.example.appsdevelopers.MobileeAppWeb.exceptions.UserServiceException;
 import com.example.appsdevelopers.MobileeAppWeb.request.UpdateUserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.request.UserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.response.UserRest;
@@ -29,6 +30,10 @@ public class UserController {
 
     @GetMapping(value = "/{userId}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<?> getUser(@PathVariable("userId") String userId) {
+
+        if (true) {
+            throw new UserServiceException("A user service exception is thrown!");
+        }
 
         if (users.containsKey(userId)) {
             return ResponseEntity.ok(users.get(userId));
