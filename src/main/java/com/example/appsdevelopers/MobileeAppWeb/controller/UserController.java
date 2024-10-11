@@ -2,6 +2,7 @@ package com.example.appsdevelopers.MobileeAppWeb.controller;
 
 import com.example.appsdevelopers.MobileeAppWeb.request.UserDetailsRequestModel;
 import com.example.appsdevelopers.MobileeAppWeb.response.UserRest;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class UserController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
-    public ResponseEntity<UserRest> createUser(@RequestBody UserDetailsRequestModel userDetails) {
+    public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDetailsRequestModel userDetails) {
 
         UserRest returnValue = new UserRest();
         returnValue.setEmail(userDetails.getEmail());
